@@ -14,3 +14,4 @@
 
 ### 4. Output  
 ![Alt text](https://github.com/opannapo/OutputPreviewAssets/blob/master/android-github-client/1.png "Output")
+![opannapo](https://github.com/opannapo/OutputPreviewAssets/blob/master/android-github-client/1.png){:height="50%" width="50%"}
