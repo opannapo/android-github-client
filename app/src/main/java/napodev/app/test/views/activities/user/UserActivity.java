@@ -17,7 +17,6 @@ import napodev.app.test.views.fragments.following.FragmentFollowing;
 import napodev.app.test.views.fragments.repositories.FragmentRepositories;
 import napodev.framework.bework.corebase.model.view.BaseViewModel;
 import napodev.framework.bework.corebase.view.BaseActivity;
-import napodev.framework.bework.corebase.view.BaseFragment;
 import napodev.framework.bework.corebase.worker.view.BaseActivityControl;
 import napodev.framework.bework.utils.Log;
 
@@ -36,7 +35,6 @@ public class UserActivity extends BaseActivity implements UserView.ViewImpl, Vie
     private final int TAB_FOLLOWERS = 2;
 
     private FragmentTransaction fragmentTransaction;
-    private BaseFragment fragmentSelected;
     private FragmentRepositories fragmentRepositories;
     private FragmentFollowers fragmentFollowers;
     private FragmentFollowing fragmentFollowing;
@@ -136,19 +134,16 @@ public class UserActivity extends BaseActivity implements UserView.ViewImpl, Vie
         fragmentTransaction = getSupportFragmentManager().beginTransaction();
         if (idx == TAB_REPO) {
             Log.d("TAB_REPO");
-            fragmentSelected = fragmentRepositories;
             fragmentTransaction.show(fragmentRepositories);
             fragmentTransaction.hide(fragmentFollowers);
             fragmentTransaction.hide(fragmentFollowing);
         } else if (idx == TAB_FOLLOWERS) {
             Log.d("TAB_FOLLOWERS");
-            fragmentSelected = fragmentFollowers;
             fragmentTransaction.hide(fragmentRepositories);
             fragmentTransaction.show(fragmentFollowers);
             fragmentTransaction.hide(fragmentFollowing);
         } else {
             Log.d("TAB_FOLLOWING");
-            fragmentSelected = fragmentFollowing;
             fragmentTransaction.hide(fragmentRepositories);
             fragmentTransaction.hide(fragmentFollowers);
             fragmentTransaction.show(fragmentFollowing);

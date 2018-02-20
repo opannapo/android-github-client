@@ -22,5 +22,7 @@ public class EndPoint {
         return RetrofitClient.getClient(BASE_URL).create(User.class);
     }
 
-
+    public static Repo repo() {
+        return RetrofitClient.getClient(BASE_URL).create(Repo.class);
+    }
 }

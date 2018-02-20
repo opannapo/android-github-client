@@ -1,5 +1,7 @@
-package napodev.app.test.views.fragments.repositories;
+package napodev.app.test.views.fragments.branch;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
@@ -9,11 +11,11 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 
 import napodev.app.test.R;
-import napodev.app.test.adapter.repositories.RepoAdapter;
+import napodev.app.test.adapter.content.ContentAdapter;
+import napodev.app.test.entities.ContentEntity;
 import napodev.app.test.entities.RepositoryEntity;
 import napodev.app.test.entities.UserEntity;
 import napodev.app.test.utils.LoadingUtils;
-import napodev.app.test.views.activities.repo.RepoActivity;
 import napodev.framework.bework.corebase.model.view.BaseFragmentViewModel;
 import napodev.framework.bework.corebase.view.BaseActivity;
 import napodev.framework.bework.corebase.view.BaseFragment;
@@ -24,14 +26,15 @@ import napodev.framework.bework.corebase.worker.view.BaseFragmentControl;
  * Created by opannapo on 2/20/18.
  */
 
-public class FragmentRepositories extends BaseFragment implements FragmentRepositoriesView.ViewImpl {
-    FragmentRepositoriesView view;
-    FragmentRepositoriesWorker worker;
+public class FragmentBranch extends BaseFragment implements FragmentBranchView.ViewImpl {
+    FragmentBranchView view;
+    FragmentBranchWorker worker;
+    RepositoryEntity repositoryEntity;
     UserEntity userEntity;
 
-    private ArrayList<RepositoryEntity> entities = new ArrayList<>();
+    private ArrayList<ContentEntity> entities = new ArrayList<>();
     private LinearLayoutManager lm;
-    private RepoAdapter adapter;
+    private ContentAdapter adapter;
 
     @Override
     public BaseFragmentViewModel getViewModel() {
@@ -45,10 +48,12 @@ public class FragmentRepositories extends BaseFragment implements FragmentReposi
 
     @Override
     public void onViewCreatedBase(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        view = new FragmentRepositoriesView(this, this, worker, inflater, container);
-        worker = new FragmentRepositoriesWorker(this);
+        view = new FragmentBranchView(this, this, worker, inflater, container);
+        worker = new FragmentBranchWorker(this);
 
+        repositoryEntity = getArguments().getParcelable("RepositoryEntity");
         userEntity = getArguments().getParcelable("UserEntity");
+
         lm = new LinearLayoutManager(getActivity());
         view.rV.setLayoutManager(lm);
         view.rV.setNestedScrollingEnabled(false);
@@ -58,7 +63,7 @@ public class FragmentRepositories extends BaseFragment implements FragmentReposi
     public void onHiddenChangedBase(boolean isHidden) {
         if (!isHidden && isFirstVisible()) {
             LoadingUtils.getInstance().show(getActivity().getSupportFragmentManager());
-            worker.reqUserRepositories(userEntity.getLogin());
+            worker.reqRepoBranch(userEntity.getLogin(), repositoryEntity.getName());
         }
     }
 
@@ -73,23 +78,25 @@ public class FragmentRepositories extends BaseFragment implements FragmentReposi
     }
 
     @Override
-    public void resUserRepositories(boolean y, String info, ArrayList<RepositoryEntity> entities) {
+    public void resRepoBranch(boolean y, String info, ArrayList<ContentEntity> entities) {
         LoadingUtils.getInstance().dissmiss();
         if (y) {
             this.entities.addAll(entities);
             if (adapter == null) {
-                adapter = new RepoAdapter(getActivity(), this.entities, null, null);
+                adapter = new ContentAdapter(getActivity(), this.entities, null, null);
                 view.rV.setAdapter(adapter);
                 adapter.setOnItemClickListener(new OnAdapterItemsClickListener() {
                     @Override
                     public void onItemsClicked(int viewType, int position, View v) {
-                        RepositoryEntity entity = (RepositoryEntity) adapter.getContentByPosition(position);
                         switch (v.getId()) {
                             case R.id.root:
-                                Bundle b = new Bundle();
-                                b.putParcelable("RepositoryEntity", entity);
-                                b.putParcelable("UserEntity", userEntity);
-                                ((BaseActivity) getActivity()).redirect(RepoActivity.class, b, BaseActivity.ANIM_TYPE.RIGHT_TO_LEFT);
+                                Uri webpage = Uri.parse(repositoryEntity.getHtml_url());
+                                Intent intent = new Intent(Intent.ACTION_VIEW, webpage);
+                                if (intent.resolveActivity(getActivity().getPackageManager()) != null) {
+                                    startActivity(intent);
+                                } else {
+                                    ((BaseActivity) getActivity()).showToast("Can't open browser", R.layout.inflate_toast, R.id.tMsg);
+                                }
                                 break;
                         }
                     }

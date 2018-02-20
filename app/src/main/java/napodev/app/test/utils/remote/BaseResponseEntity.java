@@ -30,6 +30,8 @@ public class BaseResponseEntity extends BaseParcelable {
 
     @Override
     public BaseParcelable parse(Object object) {
+        dataObj = new JSONObject();
+        dataArr = new JSONArray();
         if (object instanceof JSONObject) {
             if (((JSONObject) object).has("errors")) {
                 success = false;
