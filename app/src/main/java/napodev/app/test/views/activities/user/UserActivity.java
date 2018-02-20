@@ -7,7 +7,6 @@ import com.bumptech.glide.Glide;
 
 import napodev.app.test.R;
 import napodev.app.test.entities.UserEntity;
-import napodev.app.test.utils.DecimalHelper;
 import napodev.app.test.utils.LoadingUtils;
 import napodev.framework.bework.corebase.model.view.BaseViewModel;
 import napodev.framework.bework.corebase.view.BaseActivity;
@@ -68,8 +67,9 @@ public class UserActivity extends BaseActivity implements UserView.ViewImpl, Vie
         if (y) {
             this.userEntity = userEntity;
             Glide.with(this).load(userEntity.getAvatar_url()).into(view.imgProfile);
-            view.tName.setText(userEntity.getLogin());
-            view.tScore.setText("Score " + String.valueOf(DecimalHelper.format(userEntity.getScore())));
+            view.tName.setText(userEntity.getName());
+            view.tLocation.setText(userEntity.getLocation());
+            view.tBio.setText(userEntity.getBio());
         } else {
             showToast(info, R.layout.inflate_toast, R.id.tMsg);
         }

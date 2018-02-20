@@ -26,7 +26,8 @@ public class UserView extends BaseViewModel {
     @Child(R.id.btnLeft) ImageView btnLeft;
     @Child(R.id.tTitle) TextView tTitle;
     @Child(R.id.tName) public TextView tName;
-    @Child(R.id.tScore) public TextView tScore;
+    @Child(R.id.tLocation) public TextView tLocation;
+    @Child(R.id.tBio) public TextView tBio;
     @Child(R.id.imgProfile) public CircleImageView imgProfile;
 
 
