@@ -21,10 +21,13 @@ import napodev.framework.bework.corebase.worker.adapter.OnAdapterItemsClickListe
 import napodev.framework.bework.corebase.worker.view.BaseActivityControl;
 import napodev.framework.bework.utils.Log;
 
-public class HomeActivity extends BaseActivity implements HomeView.ViewImpl, View.OnClickListener {
-    HomeWorker worker;
-    HomeView view;
+/**
+ * Created by opannapo on 2/20/18.
+ */
 
+public class HomeActivity extends BaseActivity implements HomeView.ViewImpl, View.OnClickListener {
+    private HomeWorker worker;
+    private HomeView view;
     private ArrayList<UserEntity> userEntities = new ArrayList<>();
     private LinearLayoutManager lm;
     private UserAdapter adapter;

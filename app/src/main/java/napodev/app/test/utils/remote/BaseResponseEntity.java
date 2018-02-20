@@ -3,6 +3,7 @@ package napodev.app.test.utils.remote;
 import android.annotation.SuppressLint;
 import android.os.Parcel;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import napodev.framework.bework.corebase.model.parcel.BaseParcelable;
@@ -16,7 +17,8 @@ import napodev.framework.bework.utils.helper.JSONHelper;
 @SuppressLint("ParcelCreator")
 public class BaseResponseEntity extends BaseParcelable {
     @Entity(ParcelInject.BOOLEAN) private boolean success;
-    @Entity(ParcelInject.JSONOBJECT) private JSONObject data;
+    @Entity(ParcelInject.JSONOBJECT) private JSONObject dataObj;
+    @Entity(ParcelInject.JSONARRAY) private JSONArray dataArr;
     @Entity(ParcelInject.STRING) private String error;
 
     public BaseResponseEntity() {
@@ -28,12 +30,17 @@ public class BaseResponseEntity extends BaseParcelable {
 
     @Override
     public BaseParcelable parse(Object object) {
-        if (((JSONObject) object).has("errors")) {
-            success = false;
-            error = JSONHelper.getString((JSONObject) object, "message");
-        } else {
+        if (object instanceof JSONObject) {
+            if (((JSONObject) object).has("errors")) {
+                success = false;
+                error = JSONHelper.getString((JSONObject) object, "message");
+            } else {
+                success = true;
+                dataObj = (JSONObject) object;
+            }
+        } else if (object instanceof JSONArray) {
             success = true;
-            data = (JSONObject) object;
+            dataArr = (JSONArray) object;
         }
 
         return this;
@@ -59,12 +66,20 @@ public class BaseResponseEntity extends BaseParcelable {
         this.success = success;
     }
 
-    public JSONObject getData() {
-        return data;
+    public JSONObject getDataObj() {
+        return dataObj;
     }
 
-    public void setData(JSONObject data) {
-        this.data = data;
+    public void setDataObj(JSONObject dataObj) {
+        this.dataObj = dataObj;
+    }
+
+    public JSONArray getDataArr() {
+        return dataArr;
+    }
+
+    public void setDataArr(JSONArray dataArr) {
+        this.dataArr = dataArr;
     }
 
     public String getError() {

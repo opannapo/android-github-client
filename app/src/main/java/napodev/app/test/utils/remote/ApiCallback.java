@@ -1,7 +1,5 @@
 package napodev.app.test.utils.remote;
 
-import org.json.JSONObject;
-
 /**
  * Created by opannapo on 2/20/18.
  */
@@ -11,7 +9,7 @@ public abstract class ApiCallback {
 
     }
 
-    public void onResponseJson(String url, JSONObject response) {
+    public void onResponseJson(String url, Object response) {
 
     }
 

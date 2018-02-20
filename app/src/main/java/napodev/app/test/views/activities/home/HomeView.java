@@ -22,7 +22,9 @@ import napodev.framework.bework.utils.napoinject.FontDefault;
 import napodev.framework.bework.utils.napoinject.FontItalic;
 import napodev.framework.bework.utils.napoinject.Root;
 
-
+/**
+ * Created by opannapo on 2/20/18.
+ */
 @Root(R.layout.activity_main)
 @FontDefault(Constant.Font.DEFAULT)
 @FontItalic(Constant.Font.ITALIC)

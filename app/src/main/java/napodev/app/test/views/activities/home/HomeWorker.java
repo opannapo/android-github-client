@@ -15,6 +15,9 @@ import napodev.framework.bework.corebase.model.view.BaseViewModel;
 import napodev.framework.bework.corebase.worker.view.BaseActivityControl;
 import napodev.framework.bework.utils.helper.JSONHelper;
 
+/**
+ * Created by opannapo on 2/20/18.
+ */
 public class HomeWorker extends BaseActivityControl implements HomeView.WorkerImpl {
     HomeView.ViewImpl view;
     private boolean onProgress;
@@ -47,9 +50,9 @@ public class HomeWorker extends BaseActivityControl implements HomeView.WorkerIm
 
                         if (responseEntity.isSuccess()) {
                             ArrayList<UserEntity> userEntities = new ArrayList<>();
-                            if (responseEntity.getData().has("items")) {
-                                int total_count = JSONHelper.getInt(responseEntity.getData(), "total_count");
-                                JSONArray items = JSONHelper.getArray(responseEntity.getData(), "items");
+                            if (responseEntity.getDataObj().has("items")) {
+                                int total_count = JSONHelper.getInt(responseEntity.getDataObj(), "total_count");
+                                JSONArray items = JSONHelper.getArray(responseEntity.getDataObj(), "items");
                                 for (int i = 0; i < items.length(); i++) {
                                     try {
                                         UserEntity u = (UserEntity) new UserEntity().parse(items.get(i));

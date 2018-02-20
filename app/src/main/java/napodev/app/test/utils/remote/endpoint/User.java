@@ -14,4 +14,16 @@ public interface User {
     @Headers(EndPoint.HeaderAccept)
     @GET("users/{username}")
     Call<ResponseBody> username(@Path("username") String username);
+
+    @Headers(EndPoint.HeaderAccept)
+    @GET("users/{username}/repos")
+    Call<ResponseBody> repositories(@Path("username") String username);
+
+    @Headers(EndPoint.HeaderAccept)
+    @GET("users/{username}/followers")
+    Call<ResponseBody> followers(@Path("username") String username);
+
+    @Headers(EndPoint.HeaderAccept)
+    @GET("users/{username}/following")
+    Call<ResponseBody> following(@Path("username") String username);
 }

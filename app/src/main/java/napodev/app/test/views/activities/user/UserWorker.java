@@ -8,6 +8,10 @@ import napodev.app.test.utils.remote.endpoint.EndPoint;
 import napodev.framework.bework.corebase.model.view.BaseViewModel;
 import napodev.framework.bework.corebase.worker.view.BaseActivityControl;
 
+/**
+ * Created by opannapo on 2/20/18.
+ */
+
 public class UserWorker extends BaseActivityControl implements UserView.WorkerImpl {
     UserView.ViewImpl view;
     private boolean onProgress;
@@ -29,7 +33,7 @@ public class UserWorker extends BaseActivityControl implements UserView.WorkerIm
                         onProgress = false;
 
                         if (responseEntity.isSuccess()) {
-                            UserEntity u = (UserEntity) new UserEntity().parse(responseEntity.getData());
+                            UserEntity u = (UserEntity) new UserEntity().parse(responseEntity.getDataObj());
                             view.resUser(true, "success", u);
                         } else {
                             view.resUser(false, responseEntity.getError(), null);

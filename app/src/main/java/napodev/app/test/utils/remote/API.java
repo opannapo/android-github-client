@@ -4,6 +4,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -98,7 +99,14 @@ public class API {
 
                         if (StringHelper.isValidString(strResult)) {
                             if (isJSONValid(strResult)) {
-                                JSONObject res = new JSONObject(strResult);
+                                JsonElement jsonElem = new JsonParser().parse(strResult);
+                                Object res = null;
+                                if (jsonElem.isJsonObject()) {
+                                    res = new JSONObject(strResult);
+                                } else if (jsonElem.isJsonArray()) {
+                                    res = new JSONArray(strResult);
+                                }
+
                                 baseResponseEntity = new BaseResponseEntity();
                                 apiCallback.onResponseBeworkParcel(reqInfo, (BaseResponseEntity) baseResponseEntity.parse(res));
                                 apiCallback.onResponseJson(reqInfo, res);
@@ -141,7 +149,7 @@ public class API {
         private boolean isJSONValid(String value) {
             try {
                 JsonElement jsonElem = new JsonParser().parse(value);
-                if (jsonElem.isJsonObject()) {
+                if (jsonElem.isJsonObject() || jsonElem.isJsonArray()) {
                     return true;
                 } else {
                     return false;
