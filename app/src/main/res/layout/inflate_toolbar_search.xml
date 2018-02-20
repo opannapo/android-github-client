@@ -1,0 +1,63 @@
+<android.support.v7.widget.Toolbar
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/toolbar"
+    android:layout_width="match_parent"
+    android:layout_height="?android:attr/actionBarSize"
+    android:layout_margin="0dip"
+    android:background="@color/colorPrimaryDark"
+    android:contentInsetLeft="0dp"
+    android:contentInsetStart="0dp"
+    android:fitsSystemWindows="true"
+    android:padding="0dip"
+    app:contentInsetLeft="0dp"
+    app:contentInsetStart="0dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="visible">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_toLeftOf="@+id/btnRight"
+            android:orientation="horizontal"
+            android:padding="0dp">
+
+            <EditText
+                android:id="@+id/eSearch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/bg_input"
+                android:hint="username"
+                android:imeOptions="actionDone"
+                android:inputType="text"
+                android:maxLines="1"
+                android:padding="5dp"
+                android:textSize="14dp"/>
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/btnRight"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:padding="8dp"
+            android:src="@android:drawable/ic_menu_search"/>
+
+        <View
+            android:id="@+id/view"
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:layout_alignParentBottom="true"
+            android:alpha="0.8"
+            android:background="@drawable/bg_shadow_bottom"/>
+    </RelativeLayout>
+
+
+</android.support.v7.widget.Toolbar>
